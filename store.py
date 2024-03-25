@@ -1,5 +1,4 @@
-# You may need to import additional modules or classes, for example, a Factory class.
-# from factory import Factory
+from factories import EasterFactory, ChristmasFactory, HalloweenFactory
 
 class Store:
     def __init__(self):
@@ -31,17 +30,31 @@ class Store:
     def order_items_from_factory(self, order):
         product_id = order['Product ID']
         # We order 100 of the item as per the assignment's instruction
-        # This will require a Factory class with a method like 'create_item'.
-        new_items = Factory.create_item(product_id, 100)
+        
+        # Determine which factory to use based on the product ID
+        factory = self.get_factory(product_id)
+        if factory:
+            new_items = factory.create_item(product_id, 100)
 
-        # Add the new items to the inventory
-        self.inventory[product_id] = {
-            'quantity': 100,
-            'details': new_items  # This should be the item details as per your Factory implementation
-        }
+            # Add the new items to the inventory
+            self.inventory[product_id] = {
+                'quantity': 100,
+                'details': new_items  # This should be the item details as per your Factory implementation
+            }
 
-        # After ordering, process the order again
-        self.process_order(order)
+            # After ordering, process the order again
+            self.process_order(order)
+
+    def get_factory(self, product_id):
+        if product_id.startswith('E'):
+            return EasterFactory()
+        elif product_id.startswith('C'):
+            return ChristmasFactory()
+        elif product_id.startswith('H'):
+            return HalloweenFactory()
+        else:
+            # Handle unknown product IDs or return a default factory
+            return None
 
     def generate_daily_transaction_report(self):
         from datetime import datetime

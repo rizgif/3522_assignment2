@@ -25,14 +25,18 @@ def main_menu():
 
 def process_web_orders():
     filename = input("Enter the name of the Excel file with web orders: ")
+    print(f"Attempting to read file: {filename}")
     
     try:
         orders = pd.read_excel(filename)
         # Process orders here
+        print("Orders processed successfully.")
     except FileNotFoundError:
         print("The file was not found. Please make sure the file name is correct.")
     except Exception as e:
         print(f"An error occurred: {e}")
+
+
 
 
 def check_inventory():
