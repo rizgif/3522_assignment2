@@ -1,5 +1,7 @@
 # main.py
 
+import pandas as pd
+
 def main_menu():
     while True:
         print("\nMain Menu")
@@ -20,8 +22,18 @@ def main_menu():
             print("Invalid choice. Please enter 1, 2, or 3.")
 
 
+
 def process_web_orders():
-    pass
+    filename = input("Enter the name of the Excel file with web orders: ")
+    
+    try:
+        orders = pd.read_excel(filename)
+        # Process orders here
+    except FileNotFoundError:
+        print("The file was not found. Please make sure the file name is correct.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
 
 def check_inventory():
     pass
